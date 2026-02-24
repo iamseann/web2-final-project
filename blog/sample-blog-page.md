@@ -36,4 +36,4 @@ The above code is a JavaScript sample.
 - Item 3
 
 ## Here's how you can put images in markdown:
-![This is an eagle](/images/monthsinnnoneeee.jpg)
+![This is a photo of the months](/images/monthsinnnoneeee.jpg)

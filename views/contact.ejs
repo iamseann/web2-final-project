@@ -1,27 +1,74 @@
 <%- include('partials/top') %>
 <main>
   <h1>Contact Me</h1>
-  <form method="POST" action="/contact/submit">
-      <label>First Name:</label>
-      <br>
-      <input type="text" name="firstName">
-      <br>
+  
+  <form id="contact-form" method="POST" action="/contact/submit">
+    <label>First Name:</label><br>
+    <input type="text" name="firstName" id="firstName">
+    <br><br>
 
-      <label>Last Name:</label>
-      <br>
-      <input type="text" name="lastName">
-      <br>
+    <label>Last Name:</label><br>
+    <input type="text" name="lastName" id="lastName">
+    <br><br>
 
-      <label>Email:</label>
-      <br>
-      <input type="text" name="email">
-      <br>
+    <label>Email:</label><br>
+    <input type="text" name="email" id="email">
+    <br><br>
 
-      <label>Comments:</label>
-      <br>
-      <textarea name="comments"></textarea>
-      <br>
-      <input type="submit" value="SUBMIT">
+    <label>Comments:</label><br>
+    <textarea name="comments" id="comments"></textarea>
+    <br><br>
+
+    <button type="submit">Send Message</button>
   </form>
 </main>
+
+<script>
+  const form = document.getElementById('contact-form');
+
+  form.addEventListener('submit', (event) => {
+    // 1. Get the input elements
+    const inputs = {
+      firstName: document.getElementById('firstName'),
+      lastName: document.getElementById('lastName'),
+      email: document.getElementById('email'),
+      comments: document.getElementById('comments')
+    };
+
+    let isValid = true;
+
+    // 2. Clear previous "red signs"
+    Object.values(inputs).forEach(input => {
+      input.style.border = "1px solid #ccc";
+    });
+
+    // 3. Check for empty fields
+    if (inputs.firstName.value.trim() === "") {
+      inputs.firstName.style.border = "2px solid red";
+      isValid = false;
+    }
+    if (inputs.lastName.value.trim() === "") {
+      inputs.lastName.style.border = "2px solid red";
+      isValid = false;
+    }
+    if (inputs.comments.value.trim() === "") {
+      inputs.comments.style.border = "2px solid red";
+      isValid = false;
+    }
+
+    // 4. Validate Email Pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(inputs.email.value)) {
+      inputs.email.style.border = "2px solid red";
+      isValid = false;
+    }
+
+    // 5. Stop the form if not valid
+    if (!isValid) {
+      event.preventDefault();
+      alert("Please fix the red boxes before submitting.");
+    }
+  });
+</script>
+
 <%- include('partials/bottom') %>
