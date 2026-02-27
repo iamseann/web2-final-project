@@ -1,0 +1,249 @@
+---
+title: "Understanding Web Accessibility"
+author: "Sean Alvarado"
+description: "A research-based overview of web accessibility, legal requirements, best practices, and ARIA attribute examples with working code samples."
+published: "2026-02-27"
+---
+
+Web accessibility is the practice of designing and developing websites so that people with disabilities can understand, navigate, and interact with the internet just like anyone else. This includes individuals who are blind or visually impaired, deaf or hard of hearing, have motor impairments, cognitive disabilities, or other conditions that affect how they use technology.
+
+The internet is heavily relied upon for education, employment, communication, banking, shopping, and government services. Because of this, ensuring accessibility has become a priority. Disabled individuals deserve equal rights and equal access to digital information. If a website lacks accessibility features, such as descriptive text for images, keyboard navigation, or captions for videos, it creates digital barriers.
+
+Web accessibility is also required by law in many situations. In the United States, the Americans with Disabilities Act (ADA) requires public entities and many businesses to make their services accessible, including digital services. Failing to comply can result in legal consequences. Additionally, the Web Content Accessibility Guidelines (WCAG), developed by the World Wide Web Consortium (W3C), provide internationally recognized standards for accessible web design.
+
+Accessibility is not only a legal obligation but also an ethical responsibility and a professional standard for web developers.
+
+---
+
+## 2. Best Practices for Making Web Pages Accessible
+
+Developers should follow these best practices to create accessible websites:
+
+### Use Semantic HTML
+
+Use meaningful HTML elements such as `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<button>`, and `<label>`. These elements provide built-in accessibility support and structure.
+
+### Provide Alternative Text for Images
+
+Images that convey meaning must include descriptive `alt` text so screen readers can describe them to visually impaired users.
+
+```html
+<img src="golden-retriever.jpg" alt="Golden retriever playing in a grassy field" />
+```
+
+This allows a blind user to understand what the image represents.
+
+### Provide Captions and Subtitles
+
+Videos should include captions for users who are deaf or hard of hearing.
+
+```html
+<video controls>
+  <source src="interview.mp4" type="video/mp4">
+  <track src="captions.vtt" kind="subtitles" srclang="en" label="English">
+</video>
+```
+
+### Ensure Keyboard Accessibility
+
+All interactive elements must be accessible using only a keyboard. Users should be able to navigate using the `Tab` key and activate controls using `Enter` or `Space`.
+
+### Use Proper Form Labels
+
+Every input field should be clearly associated with a `<label>`.
+
+```html
+<label for="username">Username:</label>
+<input type="text" id="username" name="username" />
+```
+
+### Maintain Proper Heading Structure
+
+Headings should follow logical order (for example, `<h1>` followed by `<h2>`, not skipping levels). This helps screen reader users navigate the page.
+
+---
+
+## 3. What Are ARIA Attributes?
+
+ARIA stands for Accessible Rich Internet Applications. ARIA attributes help improve accessibility when standard HTML alone is not sufficient. They provide additional information to assistive technologies such as screen readers.
+
+ARIA includes:
+
+* **Roles** (define what an element is)
+* **States** (describe current conditions, like expanded or hidden)
+* **Properties** (add extra descriptive information)
+
+ARIA should enhance semantic HTML—not replace it. Whenever possible, developers should use native HTML elements first before adding ARIA attributes.
+
+---
+
+## 4. ARIA Attribute Code Examples
+
+Below are five original, working examples demonstrating different ARIA attributes. Each example can be copied into its own HTML file and tested in a browser.
+
+---
+
+### 1. aria-label
+
+**Purpose:** Provides an accessible name for elements that do not contain visible text.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>aria-label Demo</title>
+</head>
+<body>
+
+<button aria-label="Close notification panel">
+  &#10006;
+</button>
+
+</body>
+</html>
+```
+
+Even though the button only shows an "X" symbol, screen readers will announce "Close notification panel."
+
+---
+
+### 2. aria-describedby
+
+**Purpose:** Connects additional descriptive text to an element.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>aria-describedby Demo</title>
+</head>
+<body>
+
+<p id="emailHelp">We will never share your email address.</p>
+
+<label for="email">Email:</label>
+<input type="email" id="email" aria-describedby="emailHelp">
+
+</body>
+</html>
+```
+
+When the email field is focused, assistive technology reads the extra description.
+
+---
+
+### 3. aria-hidden
+
+**Purpose:** Hides decorative content from screen readers.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>aria-hidden Demo</title>
+</head>
+<body>
+
+<h2>
+  Welcome Back
+  <span aria-hidden="true">🎉</span>
+</h2>
+
+</body>
+</html>
+```
+
+The emoji is decorative and will not be announced.
+
+---
+
+### 4. aria-expanded and aria-controls
+
+**Purpose:** Indicates whether collapsible content is expanded or collapsed.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Expandable Section Demo</title>
+</head>
+<body>
+
+<button id="infoBtn" aria-expanded="false" aria-controls="infoSection">
+  Show Details
+</button>
+
+<div id="infoSection" hidden>
+  <p>Here are additional details about this topic.</p>
+</div>
+
+<script>
+const button = document.getElementById("infoBtn");
+const section = document.getElementById("infoSection");
+
+button.addEventListener("click", () => {
+  const isOpen = button.getAttribute("aria-expanded") === "true";
+  button.setAttribute("aria-expanded", String(!isOpen));
+  section.hidden = isOpen;
+});
+</script>
+
+</body>
+</html>
+```
+
+This keeps assistive technologies informed about whether the section is open or closed.
+
+---
+
+### 5. aria-live
+
+**Purpose:** Announces dynamic content updates automatically.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>aria-live Demo</title>
+</head>
+<body>
+
+<button onclick="showMessage()">Submit Form</button>
+
+<div id="statusMessage" aria-live="polite"></div>
+
+<script>
+function showMessage() {
+  document.getElementById("statusMessage").textContent =
+    "Your form was submitted successfully.";
+}
+</script>
+
+</body>
+</html>
+```
+
+Screen readers will automatically announce the confirmation message when it appears.
+
+---
+
+## 5. Research Resources
+
+The following resources were used in researching this topic:
+
+1. [https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes)
+2. [https://www.ada.gov/resources/web-guidance/](https://www.ada.gov/resources/web-guidance/)
+3. [https://www.w3.org/WAI/fundamentals/accessibility-intro/](https://www.w3.org/WAI/fundamentals/accessibility-intro/)
+
+---
+
+## Conclusion
+
+Web accessibility ensures that digital content is usable by everyone, including people with disabilities. By following accessibility best practices, complying with legal requirements, and properly using ARIA attributes when necessary, developers can create inclusive, professional, and legally compliant websites.
+
+Accessibility is not an optional feature—it is a core responsibility of modern web and software developers.
